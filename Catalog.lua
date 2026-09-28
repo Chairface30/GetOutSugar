@@ -10,8 +10,18 @@ ns.CATALOG = {
     -- Danger: said the moment it happens.
     { cat = "fire",        prio = "danger", label = "Standing in something",
       desc = "Several magic-damage hits within three seconds, which is what standing in fire, poison or void feels like. Best effort: this client has no combat log to say what hit you, so a damage-over-time spell can set it off too." },
-    { cat = "cc",          prio = "danger", label = "Stunned, feared or silenced",
-      desc = "You lose control of your character: stuns, fears, silences, roots and the like." },
+    -- Crowd control, one warning per kind the game reports.
+    { cat = "cc_stun",     prio = "danger", label = "Stunned" },
+    { cat = "cc_fear",     prio = "danger", label = "Feared" },
+    { cat = "cc_incap",    prio = "danger", label = "Incapacitated",
+      desc = "Polymorphed, sapped, gouged, asleep or disoriented." },
+    { cat = "cc_charm",    prio = "danger", label = "Mind controlled",
+      desc = "Charmed or possessed: someone else is steering you." },
+    { cat = "cc_silence",  prio = "danger", label = "Silenced" },
+    { cat = "cc_root",     prio = "danger", label = "Rooted" },
+    { cat = "cc_disarm",   prio = "danger", label = "Disarmed" },
+    { cat = "cc",          prio = "danger", label = "Other crowd control",
+      desc = "Any other loss of control, or one whose kind the game keeps hidden." },
     { cat = "fatigue",     prio = "danger", label = "Too far out to sea",
       desc = "The fatigue bar appears: you have swum too far from land." },
 

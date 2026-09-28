@@ -142,9 +142,11 @@ local function Build()
                 y = y - 26
             end
         end
+        return y
     end
-    Column(16, "Danger", "danger")
-    Column(300, "Moments", "situation")
+    -- Tall enough for the longer column, with the controls below it.
+    local lowest = math.min(Column(16, "Danger", "danger"), Column(300, "Moments", "situation"))
+    window:SetHeight(-lowest + 90)
 
     -- The bottom block.
     local mute = Check(window)

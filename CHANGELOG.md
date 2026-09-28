@@ -3,8 +3,8 @@
 ## Unreleased
 
 **New**
-- **Get Out, Sugar**: Trixie, the host from Chairface's Casino, yells at you before you die. Nine warnings, twenty lines each:
-  - **Danger:** standing in something, stunned or feared, too far out to sea.
+- **Get Out, Sugar**: Trixie, the host from Chairface's Casino, yells at you before you die. Sixteen warnings, twenty lines each:
+  - **Danger:** standing in something, too far out to sea, and crowd control by kind: stunned, feared, incapacitated (sheep, sap, disorient), mind controlled, silenced, rooted, disarmed, and any other.
   - **Moments:** you died, boss fight starts, boss fight lost, boss defeated, gear about to break, ready checks.
 - **She always speaks** for a warning that is on, every time it happens, and **never over herself**: while she is talking, the next line waits for her to finish. Danger waits ahead of the moments.
 - **Ready checks:** her line replaces the game's own ready check sound while that warning is on.

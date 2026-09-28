@@ -72,6 +72,14 @@ function ns.LoadSettings()
             db[key] = type(value) == "table" and {} or value
         end
     end
+    -- Crowd control used to be one warning: whoever had it on gets every
+    -- kind of it on, once.
+    if db.warnings.cc and not db.ccSplit then
+        for _, cat in ipairs({ "cc_stun", "cc_fear", "cc_incap", "cc_charm", "cc_silence", "cc_root", "cc_disarm" }) do
+            db.warnings[cat] = true
+        end
+    end
+    db.ccSplit = true
     ns.db = db
     return db
 end

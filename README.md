@@ -13,7 +13,9 @@ Made for **WoW Forever** (interface 16001).
 
 ## The warnings
 
-**Danger**: standing in something · stunned, feared or silenced · too far out to sea
+**Danger**: standing in something · too far out to sea
+
+**Crowd control**, each kind with its own lines: stunned · feared · incapacitated (sheep, sap, gouge, sleep, disorient) · mind controlled · silenced · rooted · disarmed · other crowd control (any other kind, or one the game keeps hidden)
 
 **Moments**: you died · boss fight starts · boss fight lost · boss defeated · gear about to break (20%) · ready check
 
