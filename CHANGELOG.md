@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+**New**
+- **Pull countdown starts:** Trixie calls it when someone starts a pull timer (`/pull`, the countdown button, or a boss mod's pull timer that uses the game's countdown). Twenty lines, off until you tick it.
+
 ## Get Out, Sugar v0.8 (2026-09-28)
 
 **New**

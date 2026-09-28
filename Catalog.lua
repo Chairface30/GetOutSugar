@@ -27,6 +27,8 @@ ns.CATALOG = {
 
     -- Moments.
     { cat = "death",       prio = "situation", label = "You died" },
+    { cat = "countdown",   prio = "situation", label = "Pull countdown starts",
+      desc = "Someone starts a pull timer: /pull, the countdown button, or a boss mod's pull timer that uses the game's countdown." },
     { cat = "pull",        prio = "situation", label = "Boss fight starts" },
     { cat = "wipe",        prio = "situation", label = "Boss fight lost" },
     { cat = "kill",        prio = "situation", label = "Boss defeated" },

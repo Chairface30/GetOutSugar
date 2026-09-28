@@ -18,6 +18,7 @@ Voice.lua
 Detect\Damage.lua
 Detect\Control.lua
 Detect\Encounter.lua
+Detect\Countdown.lua
 Detect\Breath.lua
 Detect\Life.lua
 Probe.lua
