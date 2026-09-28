@@ -12,4 +12,4 @@
 - Every warning starts off. `/trixie` opens the options: tick what you want and press Play to hear it. Mute and the sound channel are there too.
 - `/trixie probe` records what this client lets the warnings see.
 - For WoW Forever. The client has no combat log, so "standing in something" is a best guess from the damage you take, and can mistake a damage-over-time spell for fire.
-- The voice lines are placeholders spoken by a Windows voice while the addon is tested; Trixie's real voice comes next.
+- **Trixie's own voice** for all 320 lines, recorded with ElevenLabs' Eleven v4, each line directed with an audio tag (alarmed, teasing, sighing and the rest).
