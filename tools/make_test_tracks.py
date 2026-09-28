@@ -3,7 +3,8 @@
 
 Every line in lines.py is said by Microsoft Zira (System.Speech, built into
 Windows), prefixed with its warning's name so you can tell in game which one
-fired: "fire. Get out of the fire, sugar!". Each is converted to Ogg under
+fired ("fire. Get out of the fire sugar!"), except crowd control, whose
+lines already say what happened. Each is converted to Ogg under
 the final file name, Sounds/gos_<category><n>.ogg, so putting the real voice
 in later is only a matter of replacing files. Counts.lua is rewritten from
 what landed on disk.
@@ -60,7 +61,10 @@ def main():
     print(f"{len(todo)} test clip(s) to make")
     if todo:
         with tempfile.TemporaryDirectory() as tmp:
-            items = [[os.path.join(tmp, name + ".wav"), f"{cat.replace('_', ' ')}. {text}"]
+            # The warning's name first, so you can tell which fired -- except
+            # crowd control, whose lines already say what happened.
+            items = [[os.path.join(tmp, name + ".wav"),
+                      text if cat.startswith("cc") else f"{cat.replace('_', ' ')}. {text}"]
                      for name, cat, text in todo]
             listing = os.path.join(tmp, "items.json")
             with open(listing, "w", encoding="utf-8") as f:
