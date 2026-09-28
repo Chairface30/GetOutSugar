@@ -113,10 +113,24 @@ MUTED_FILES = {}
 function MuteSoundFile(id) MUTED_FILES[id] = true end
 function UnmuteSoundFile(id) MUTED_FILES[id] = nil end
 
+-- The minimap libraries, as far as the addon uses them.
+DBICON = { registered = {}, shown = {} }
+local LDB = { objects = {} }
+function LDB:NewDataObject(name, obj) self.objects[name] = obj return obj end
+function DBICON:Register(name, obj, db) self.registered[name] = { obj = obj, db = db } self.shown[name] = not db.hide end
+function DBICON:IsRegistered(name) return self.registered[name] ~= nil end
+function DBICON:Show(name) self.shown[name] = true end
+function DBICON:Hide(name) self.shown[name] = false end
+function LibStub(name) return name == "LibDataBroker-1.1" and LDB or name == "LibDBIcon-1.0" and DBICON or nil end
+TIP = { lines = {} }
+function TIP:AddLine(t) table.insert(self.lines, t) end
+
 math.randomseed(1)
 '''
 
-TOC = [l.strip() for l in io.open("GetOutSugar.toc", encoding="utf-8") if l.strip() and not l.startswith("#")]
+# The real libraries need the whole minimap; the harness stands in for them.
+TOC = [l.strip() for l in io.open("GetOutSugar.toc", encoding="utf-8")
+       if l.strip() and not l.startswith("#") and not l.startswith("Libs")]
 
 
 def boot(setup=""):
@@ -289,6 +303,29 @@ rt = boot("GetOutSugarDB = { warnings = { aggro = true, drowning = true }, chatt
 rt.execute("FIRE('MIRROR_TIMER_START', 'BREATH', 60000, 60000, -1, false, 'Breath') NS.Refresh()")
 check("settings for warnings that are gone do no harm",
       rt.eval("#PLAYED") == 0 and rt.eval("NS.CATEGORY.aggro") is None and not any("error" in p for p in printed(rt)))
+
+# --------------------------------------------------------------------------
+print("The minimap button")
+rt = boot("GetOutSugarDB = { warnings = { fire = true }, seenWelcome = true }")
+check("it is registered with LibDBIcon", rt.eval("DBICON:IsRegistered('GetOutSugar')") is True)
+check("shown by default", rt.eval("DBICON.shown.GetOutSugar") is True)
+check("wearing Trixie's face", rt.eval("DBICON.registered.GetOutSugar.obj.icon") == r"Interface\AddOns\GetOutSugar\Textures\trixie")
+check("and the face is on disk", os.path.exists("Textures/trixie.tga"))
+check("its position is kept in the saved settings", rt.eval("DBICON.registered.GetOutSugar.db == NS.db.minimap") is True)
+rt.execute("DBICON.registered.GetOutSugar.obj.OnClick(nil, 'LeftButton')")
+check("click opens the options", rt.eval("GetOutSugarOptions:IsShown()") is True)
+rt.execute("DBICON.registered.GetOutSugar.obj.OnClick(nil, 'RightButton')")
+check("right-click mutes her", rt.eval("NS.db.muted") is True)
+rt.execute("DBICON.registered.GetOutSugar.obj.OnTooltipShow(TIP)")
+tip = [rt.eval(f"TIP.lines[{i}]") for i in range(1, rt.eval("#TIP.lines") + 1)]
+check("the tooltip says how many warnings are on, and that she is muted",
+      "1 of 16 warnings on." in tip and "Muted." in tip, tip)
+rt.execute("DBICON.registered.GetOutSugar.obj.OnClick(nil, 'RightButton')")
+check("right-click again unmutes", rt.eval("NS.db.muted") is False)
+rt.execute("SlashCmdList.GETOUTSUGAR('minimap')")
+check("/trixie minimap hides it, and it stays hidden", rt.eval("DBICON.shown.GetOutSugar") is False and rt.eval("NS.db.minimap.hide") is True)
+rt = boot("GetOutSugarDB = { minimap = { hide = true }, seenWelcome = true }")
+check("hidden across a reload", rt.eval("DBICON.shown.GetOutSugar") is False)
 
 # --------------------------------------------------------------------------
 print("Probe and commands")

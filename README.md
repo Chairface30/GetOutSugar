@@ -6,8 +6,9 @@ Made for **WoW Forever** (interface 16001).
 
 ## Using it
 
-- Type **`/trixie`** (or `/gos`). Every warning starts off: tick the ones you want and press **Play** to hear her.
-- **Mute Trixie** and the **sound channel** she plays on are at the bottom of the window.
+- Click **Trixie's face on the minimap**, or type **`/trixie`** (or `/gos`). Right-click her face to mute or unmute her.
+- Every warning starts off: tick the ones you want and press **Play** to hear her.
+- **Mute Trixie**, the **minimap button** and the **sound channel** she plays on are at the bottom of the window.
 - She speaks every time a warning that is on happens, and never over herself: while she is talking, the next line waits its turn.
 - `/trixie test <warning>` plays one; `/trixie status` shows what is on.
 

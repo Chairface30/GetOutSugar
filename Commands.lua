@@ -8,6 +8,7 @@ local function Help()
     print("  /trixie  -  open the options")
     print("  /trixie test <warning>  -  play one of its lines (/trixie test lists them)")
     print("  /trixie mute  -  mute or unmute her")
+    print("  /trixie minimap  -  show or hide the minimap button")
     print("  /trixie status  -  which warnings are on and what is listening")
     print("  /trixie probe  -  start or stop recording what this client lets her see")
     print("  /trixie probe report  -  show what the probe recorded")
@@ -46,9 +47,10 @@ local function Handler(input)
             ns.Print("test one of: " .. table.concat(names, ", "))
         end
     elseif command == "mute" then
-        ns.db.muted = not ns.db.muted
-        if ns.db.muted then ns.Voice.Stop() end
-        ns.Print(ns.db.muted and "muted." or "unmuted.")
+        ns.ToggleMute()
+    elseif command == "minimap" then
+        ns.SetMinimapShown(ns.db.minimap.hide and true or false)
+        ns.Print(ns.db.minimap.hide and "minimap button hidden." or "minimap button shown.")
         ns.RefreshOptions()
     elseif command == "status" then
         Status()

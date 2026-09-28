@@ -17,6 +17,7 @@ local DEFAULTS = {
     warnings = {},        -- category -> true
     channel = "Dialog",   -- the sound channel her lines play on
     muted = false,
+    minimap = {},         -- LibDBIcon's own settings: position, hide
     seenWelcome = false,
 }
 ns.DEFAULTS = DEFAULTS
@@ -166,6 +167,7 @@ boot:SetScript("OnEvent", function(_, event, arg1)
     elseif event == "PLAYER_LOGIN" then
         if not ns.db then ns.LoadSettings() end
         ns.Refresh()
+        if ns.SetupMinimap then pcall(ns.SetupMinimap) end
         -- Once, on a new install: every warning is off, so show where they
         -- are switched on.
         if not ns.db.seenWelcome and ns.ShowOptions then

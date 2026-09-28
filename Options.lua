@@ -67,6 +67,7 @@ function ns.RefreshOptions()
         row.play:SetEnabled(count > 0)
     end
     controls.mute:SetChecked(ns.db.muted and true or false)
+    controls.minimap:SetChecked(not ns.db.minimap.hide)
     controls.channel.labelText:SetText("Sound channel: " .. tostring(ns.db.channel))
 end
 
@@ -159,6 +160,14 @@ local function Build()
         if ns.db.muted then ns.Voice.Stop() end
     end)
     controls.mute = mute
+
+    local minimap = Check(window)
+    minimap:SetPoint("BOTTOMLEFT", 160, 50)
+    local minimapLabel = window:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+    minimapLabel:SetPoint("LEFT", minimap, "RIGHT", 2, 0)
+    minimapLabel:SetText("Minimap button")
+    minimap:SetScript("OnClick", function(self) ns.SetMinimapShown(self:GetChecked() and true or false) end)
+    controls.minimap = minimap
 
     local channel = Button(window, 180, "Sound channel")
     channel:SetPoint("BOTTOMLEFT", 300, 50)
