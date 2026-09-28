@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Trixie's real voice from ElevenLabs, replacing the test clips. SPENDS CREDITS.
 
-Eleven v4 (model eleven_v4), voice Z3R5wn05IrDiVCyEkUrK. Each line is sent
+Eleven v4 (model eleven_v4), voice DODLEQrClDo8wCz460ld. Each line is sent
 with its audio tag from lines.prompt(): v4 takes the tag as direction for the
 delivery and does not say it.
 
@@ -27,7 +27,7 @@ import lines
 from make_test_tracks import find_ffmpeg
 
 API = "https://api.elevenlabs.io/v1"
-VOICE_ID = os.environ.get("ELEVENLABS_VOICE_ID", "Z3R5wn05IrDiVCyEkUrK")
+VOICE_ID = os.environ.get("ELEVENLABS_VOICE_ID", "DODLEQrClDo8wCz460ld")
 MODEL_ID = os.environ.get("ELEVENLABS_MODEL_ID", "eleven_v4")
 OUTPUT_FORMAT = "mp3_44100_128"
 # The Casino's settings. If the model refuses them, the fallbacks are tried in
