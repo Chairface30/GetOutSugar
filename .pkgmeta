@@ -1,0 +1,6 @@
+package-as: GetOutSugar
+
+ignore:
+  - tools
+  - tests
+  - .gitignore
