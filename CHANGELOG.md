@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## Get Out, Sugar v0.8 (2026-09-28)
 
 **New**
 - **Get Out, Sugar**: Trixie, the host from Chairface's Casino, yells at you before you die. Sixteen warnings, twenty lines each:
