@@ -1,6 +1,6 @@
 -- Get Out, Sugar: Options.lua
 -- The /trixie window: every warning with a switch and a Play button to hear
--- one of its lines, then mute, the sound channel and how often she speaks.
+-- one of its lines, then mute and the sound channel.
 --
 -- Built from plain frames and textures, asking for a template only where a
 -- missing one can be survived: which templates exist has changed across
@@ -59,13 +59,6 @@ end
 
 local CHANNELS = { "Dialog", "Master", "SFX", "Music", "Ambience" }
 
-local function ChattyText(value)
-    value = tonumber(value) or 1
-    if value < 0.95 then return string.format("chattier (cooldowns x%.1f)", value) end
-    if value > 1.05 then return string.format("quieter (cooldowns x%.1f)", value) end
-    return "normal"
-end
-
 function ns.RefreshOptions()
     if not window then return end
     for _, row in ipairs(rows) do
@@ -74,18 +67,13 @@ function ns.RefreshOptions()
         row.play:SetEnabled(count > 0)
     end
     controls.mute:SetChecked(ns.db.muted and true or false)
-    controls.solo:SetChecked(ns.db.aggroSolo and true or false)
     controls.channel.labelText:SetText("Sound channel: " .. tostring(ns.db.channel))
-    controls.chattyLabel:SetText("How often: " .. ChattyText(ns.db.chatty))
-    controls.refreshing = true
-    pcall(controls.chatty.SetValue, controls.chatty, tonumber(ns.db.chatty) or 1)
-    controls.refreshing = false
 end
 
 local function Build()
     if window then return window end
     window = CreateFrame("Frame", "GetOutSugarOptions", UIParent)
-    window:SetSize(580, 470)
+    window:SetSize(580, 340)
     window:SetPoint("CENTER")
     window:SetFrameStrata("DIALOG")
     window:SetClampedToScreen(true)
@@ -160,7 +148,7 @@ local function Build()
 
     -- The bottom block.
     local mute = Check(window)
-    mute:SetPoint("BOTTOMLEFT", 16, 86)
+    mute:SetPoint("BOTTOMLEFT", 16, 50)
     local muteLabel = window:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
     muteLabel:SetPoint("LEFT", mute, "RIGHT", 2, 0)
     muteLabel:SetText("Mute Trixie")
@@ -170,18 +158,8 @@ local function Build()
     end)
     controls.mute = mute
 
-    local solo = Check(window)
-    solo:SetPoint("BOTTOMLEFT", 300, 86)
-    local soloLabel = window:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-    soloLabel:SetPoint("LEFT", solo, "RIGHT", 2, 0)
-    soloLabel:SetText("Aggro warnings when solo")
-    solo:SetScript("OnClick", function(self) ns.db.aggroSolo = self:GetChecked() and true or false end)
-    Tip(solo, "Aggro warnings when solo",
-        "Alone, every monster you fight is on you, so the aggro warnings keep quiet unless you are in a group. Tick this to hear them anyway.")
-    controls.solo = solo
-
     local channel = Button(window, 180, "Sound channel")
-    channel:SetPoint("BOTTOMLEFT", 16, 50)
+    channel:SetPoint("BOTTOMLEFT", 300, 50)
     channel:SetScript("OnClick", function()
         local at = 1
         for i, name in ipairs(CHANNELS) do if name == ns.db.channel then at = i end end
@@ -190,31 +168,6 @@ local function Build()
     end)
     Tip(channel, "Sound channel", "Which of the game's volume sliders controls her. Click to change.")
     controls.channel = channel
-
-    local chattyLabel = window:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-    chattyLabel:SetPoint("BOTTOMLEFT", 300, 70)
-    controls.chattyLabel = chattyLabel
-    local chatty
-    local okS = pcall(function() chatty = CreateFrame("Slider", nil, window, "OptionsSliderTemplate") end)
-    if not (okS and chatty) then
-        chatty = CreateFrame("Slider", nil, window)
-        local track = chatty:CreateTexture(nil, "BACKGROUND")
-        track:SetAllPoints()
-        track:SetColorTexture(0.25, 0.15, 0.22, 1)
-        chatty:SetThumbTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
-    end
-    chatty:SetOrientation("HORIZONTAL")
-    chatty:SetSize(240, 16)
-    chatty:SetPoint("BOTTOMLEFT", 300, 50)
-    chatty:SetMinMaxValues(0.5, 3)
-    chatty:SetValueStep(0.1)
-    if chatty.SetObeyStepOnDrag then pcall(chatty.SetObeyStepOnDrag, chatty, true) end
-    chatty:SetScript("OnValueChanged", function(_, value)
-        if controls.refreshing then return end
-        ns.db.chatty = math.floor((tonumber(value) or 1) * 10 + 0.5) / 10
-        chattyLabel:SetText("How often: " .. ChattyText(ns.db.chatty))
-    end)
-    controls.chatty = chatty
 
     local allOn = Button(window, 90, "All on")
     allOn:SetPoint("BOTTOMLEFT", 16, 16)

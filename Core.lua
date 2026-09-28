@@ -16,9 +16,7 @@ ns.title = "Get Out, Sugar"
 local DEFAULTS = {
     warnings = {},        -- category -> true
     channel = "Dialog",   -- the sound channel her lines play on
-    chatty = 1,           -- cooldown multiplier: under 1 is chattier
     muted = false,
-    aggroSolo = false,    -- aggro warnings while not in a group too
     seenWelcome = false,
 }
 ns.DEFAULTS = DEFAULTS

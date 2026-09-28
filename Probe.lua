@@ -16,12 +16,9 @@ ns.Probe = Probe
 
 local EVENTS = {
     "UNIT_COMBAT", "COMBAT_TEXT_UPDATE", "LOSS_OF_CONTROL_ADDED", "LOSS_OF_CONTROL_UPDATE",
-    "PLAYER_CONTROL_LOST", "RAID_BOSS_EMOTE", "RAID_BOSS_WHISPER", "CHAT_MSG_RAID_BOSS_EMOTE",
-    "CHAT_MSG_RAID_BOSS_WHISPER", "CHAT_MSG_MONSTER_YELL", "CHAT_MSG_MONSTER_EMOTE",
-    "MIRROR_TIMER_START", "MIRROR_TIMER_STOP", "PLAYER_DEAD", "ENCOUNTER_START", "ENCOUNTER_END",
-    "UPDATE_INVENTORY_DURABILITY", "READY_CHECK", "UNIT_THREAT_SITUATION_UPDATE",
-    "UNIT_THREAT_LIST_UPDATE", "UI_ERROR_MESSAGE", "UNIT_HEALTH", "PLAYER_REGEN_DISABLED",
-    "PLAYER_REGEN_ENABLED",
+    "PLAYER_CONTROL_LOST", "MIRROR_TIMER_START", "MIRROR_TIMER_STOP", "PLAYER_DEAD",
+    "ENCOUNTER_START", "ENCOUNTER_END", "UPDATE_INVENTORY_DURABILITY", "READY_CHECK",
+    "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED",
 }
 
 local function Describe(value)
@@ -85,20 +82,15 @@ end
 function Probe.CheckAPIs()
     local p, state = DB(), State()
     local out = {}
-    out["UnitHealthMax(player)"] = Try("UnitHealthMax", "player")
-    out["UnitHealth(player)"] = Try("UnitHealth", "player")
-    out["UnitDetailedThreatSituation(player, target)"] = Try("UnitDetailedThreatSituation", "player", "target")
-    out["UnitThreatSituation(player)"] = Try("UnitThreatSituation", "player")
-    out["UnitGroupRolesAssigned(player)"] = Try("UnitGroupRolesAssigned", "player")
-    out["UnitGUID(target)"] = Try("UnitGUID", "target")
     out["GetMirrorTimerProgress(BREATH)"] = Try("GetMirrorTimerProgress", "BREATH")
     out["GetMirrorTimerInfo(1)"] = Try("GetMirrorTimerInfo", 1)
     out["C_LossOfControl.GetActiveLossOfControlDataCount"] = Try("C_LossOfControl.GetActiveLossOfControlDataCount")
     out["C_LossOfControl.GetActiveLossOfControlData(1)"] = Try("C_LossOfControl.GetActiveLossOfControlData", 1)
     out["GetCurrentCombatTextEventInfo"] = Try("GetCurrentCombatTextEventInfo")
     out["GetInventoryItemDurability(5)"] = Try("GetInventoryItemDurability", 5)
-    out["C_EncounterWarnings"] = Exists("C_EncounterWarnings") and "exists" or "missing"
-    out["C_EncounterTimeline"] = Exists("C_EncounterTimeline") and "exists" or "missing"
+    out["MuteSoundFile / UnmuteSoundFile"] = (Exists("MuteSoundFile") and "exists" or "missing")
+        .. " / " .. (Exists("UnmuteSoundFile") and "exists" or "missing")
+    out["C_Sound.IsPlaying"] = Exists("C_Sound.IsPlaying") and "exists" or "missing"
     out["CombatLogGetCurrentEventInfo"] = Exists("CombatLogGetCurrentEventInfo") and "exists" or "missing"
     out["issecretvalue"] = Exists("issecretvalue") and "exists" or "missing"
     p.apis[state] = out

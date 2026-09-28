@@ -1,11 +1,10 @@
 -- Get Out, Sugar: Detect/Life.lua
--- The situational warnings: dying, worn-out gear, ready checks, and the
--- game's "out of range" family of errors.
+-- Dying, worn-out gear, and ready checks.
 
 local _, ns = ...
 
 -------------------------------------------------------------------------------
--- Death, durability, ready checks
+-- Death and durability
 -------------------------------------------------------------------------------
 
 local LOW_DURABILITY = 0.20
@@ -35,7 +34,44 @@ function ns.OnDurability()
     gearLow = low
 end
 
--- A ready check you started yourself needs no reminder.
+local lifeListener = ns.Listener(function(event)
+    if event == "PLAYER_DEAD" then
+        ns.Voice.Play("death")
+    elseif event == "UPDATE_INVENTORY_DURABILITY" then
+        ns.OnDurability()
+    end
+end)
+
+ns.RegisterDetector("life", {
+    cats = { "death", "durability" },
+    Enable = function()
+        lifeListener:Listen("PLAYER_DEAD")
+        lifeListener:Listen("UPDATE_INVENTORY_DURABILITY")
+        gearLow = (ns.LowestDurability() or 1) <= LOW_DURABILITY
+    end,
+    Disable = function() lifeListener:Quiet() end,
+})
+
+-------------------------------------------------------------------------------
+-- Ready checks
+-------------------------------------------------------------------------------
+-- Trixie takes the place of the game's own ready check sound: while this
+-- warning is on, that sound's file is muted, and she speaks instead. The game
+-- plays it when the ready check window opens, which it does for everyone but
+-- the player who started the check -- so she stays quiet for your own too.
+
+ns.READY_CHECK_SOUND = 567409     -- sound/interface/readycheck.ogg
+
+local muted = false
+
+local function MuteGameSound(on)
+    local fn = on and _G.MuteSoundFile or _G.UnmuteSoundFile
+    if type(fn) ~= "function" then return false end
+    local ok = pcall(fn, ns.READY_CHECK_SOUND)
+    if ok then muted = on end
+    return ok
+end
+
 local function MyName(name)
     if not ns.Readable(name) or type(name) ~= "string" then return false end
     local ok, first, second = ns.Ask(UnitName, "player")
@@ -44,53 +80,18 @@ local function MyName(name)
     return name == first or name == full or name:find(full, 1, true) == 1
 end
 
-local lifeListener = ns.Listener(function(event, ...)
-    if event == "PLAYER_DEAD" then
-        ns.Voice.Play("death")
-    elseif event == "UPDATE_INVENTORY_DURABILITY" then
-        ns.OnDurability()
-    elseif event == "READY_CHECK" then
-        if not MyName((...)) then ns.Voice.Play("ready_check") end
-    end
+local readyListener = ns.Listener(function(event, initiator)
+    if not MyName(initiator) then ns.Voice.Play("ready_check") end
 end)
 
-ns.RegisterDetector("life", {
-    cats = { "death", "durability", "ready_check" },
+ns.RegisterDetector("readycheck", {
+    cats = { "ready_check" },
     Enable = function()
-        lifeListener:Listen("PLAYER_DEAD")
-        lifeListener:Listen("UPDATE_INVENTORY_DURABILITY")
-        lifeListener:Listen("READY_CHECK")
-        gearLow = (ns.LowestDurability() or 1) <= LOW_DURABILITY
+        readyListener:Listen("READY_CHECK")
+        MuteGameSound(true)
     end,
-    Disable = function() lifeListener:Quiet() end,
-})
-
--------------------------------------------------------------------------------
--- Out of range, out of sight, facing the wrong way
--------------------------------------------------------------------------------
--- Matched against the game's own strings, so it works in any language.
-
-local RANGE_ERRORS = {
-    "ERR_OUT_OF_RANGE", "SPELL_FAILED_OUT_OF_RANGE", "SPELL_FAILED_LINE_OF_SIGHT",
-    "SPELL_FAILED_UNIT_NOT_INFRONT", "ERR_BADATTACKFACING", "ERR_BADATTACKPOS",
-    "SPELL_FAILED_TOO_CLOSE",
-}
-
-function ns.IsRangeError(message)
-    if type(message) ~= "string" then return false end
-    for _, key in ipairs(RANGE_ERRORS) do
-        local text = _G[key]
-        if type(text) == "string" and text ~= "" and message == text then return true end
-    end
-    return false
-end
-
-local errorListener = ns.Listener(function(_, _, message)
-    if ns.Readable(message) and ns.IsRangeError(message) then ns.Voice.Play("range") end
-end)
-
-ns.RegisterDetector("errors", {
-    cats = { "range" },
-    Enable = function() errorListener:Listen("UI_ERROR_MESSAGE") end,
-    Disable = function() errorListener:Quiet() end,
+    Disable = function()
+        readyListener:Quiet()
+        if muted then MuteGameSound(false) end
+    end,
 })

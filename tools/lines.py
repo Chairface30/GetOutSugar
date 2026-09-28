@@ -42,94 +42,6 @@ POOLS = {
         "Out of the puddle, hon!",
         "Don't just stand there, MOVE!",
     ],
-    "big_hit": [
-        "Ooh, that one's gonna leave a mark.",
-        "Ouch! Somebody get this girl a healer!",
-        "That hurt, sugar! Watch yourself!",
-        "Whew, that was a big one!",
-        "Darlin', you just got flattened!",
-        "Ow! Heal up, hon!",
-        "That's gonna bruise, sugar!",
-        "Big hit! Careful now!",
-        "Lord, that one rattled my teeth!",
-        "You felt that one, didn't you?",
-        "Hon, you can't take many more of those!",
-        "Yikes! Pop somethin', quick!",
-        "That was a wallop, sugar!",
-        "Oof! Right in the pride!",
-        "Easy, darlin', that one nearly had you!",
-        "Heal, heal, heal!",
-        "Sugar, you're gettin' clobbered!",
-        "That one came with interest!",
-        "Whoa! Big one incoming, and it landed!",
-        "Somebody's hittin' hard, hon!",
-    ],
-    "aggro": [
-        "Honey, that thing's lookin' at YOU. Back off!",
-        "You pulled it, sugar! Run to the tank!",
-        "Uh oh, it's comin' for you!",
-        "It's on you, hon! Get to the tank!",
-        "You've got aggro, darlin'!",
-        "Sugar, it likes you. That's bad!",
-        "Run to the big guy with the shield!",
-        "It's chasin' you, hon! Move!",
-        "Well, you've made a new friend. Run!",
-        "You grabbed aggro, sugar!",
-        "Stop hittin' it, it's on you!",
-        "Darlin', you're the tank now. Congratulations.",
-        "It's lookin' right at you, hon!",
-        "Bring it to the tank, sugar!",
-        "You pulled threat! Back it up!",
-        "Honey, why is it hittin' YOU?",
-        "Aggro! Aggro on you!",
-        "Oh sugar, it's mad at you now!",
-        "Run it back to the tank, hon!",
-        "That monster picked you, darlin'!",
-    ],
-    "aggro_close": [
-        "Ease up, sugar, you're about to pull it!",
-        "Easy, hon! You're right on the tank's heels!",
-        "Slow down, darlin', your threat's too high!",
-        "Careful, sugar, it's about to turn!",
-        "Hold back a second, hon!",
-        "You're this close to pullin' it!",
-        "Easy on the buttons, sugar!",
-        "Whoa there, let the tank catch up!",
-        "Threat's gettin' high, darlin'!",
-        "Pace yourself, hon!",
-        "Sugar, you're flirtin' with aggro!",
-        "Take a breath, you're nearly on top!",
-        "Hold your fire a moment, hon!",
-        "Careful now, you're gonna pull it!",
-        "Back off a hair, darlin'!",
-        "Your threat's creepin' up, sugar!",
-        "Ease off, or it's comin' for you!",
-        "Easy, tiger!",
-        "Let the tank work, hon!",
-        "Too hot, sugar! Cool it!",
-    ],
-    "tank_lost": [
-        "You dropped one, darlin'. Go get it back!",
-        "Tank! One's gettin' away!",
-        "Sugar, it's off you! Taunt it!",
-        "You lost one, hon! Grab it!",
-        "Loose mob! Go get it, tank!",
-        "It's runnin' off, darlin'!",
-        "Hon, somethin' slipped away!",
-        "Taunt, sugar, taunt!",
-        "You lost aggro, hon!",
-        "One's eatin' your healer, darlin'!",
-        "Get it back on you, sugar!",
-        "Tank, you've got a runaway!",
-        "Grab it, grab it!",
-        "It's not on you anymore, hon!",
-        "Somebody's gettin' chewed, sugar! Pick it up!",
-        "You let one go, darlin'!",
-        "Snag that one back, hon!",
-        "Loose one! Loose one!",
-        "Sugar, your mob wandered off!",
-        "Hey tank, you missed one!",
-    ],
     "cc": [
         "Shake it off, hon!",
         "You're stuck, sugar!",
@@ -151,72 +63,6 @@ POOLS = {
         "Stuck like a fly in molasses!",
         "Hang tight, it won't last!",
         "Control's gone, hon!",
-    ],
-    "boss_you": [
-        "It's after you, sugar. Move!",
-        "The boss picked you, hon!",
-        "Darlin', you're the target!",
-        "Uh oh, it's lookin' your way!",
-        "It's you, sugar! Get ready!",
-        "Heads up, hon, it's comin' for you!",
-        "You've been chosen, and not in a good way!",
-        "Move, darlin', it's got your name!",
-        "Sugar, it's whisperin' sweet nothin's to you. Run!",
-        "It singled you out, hon!",
-        "You're up, darlin'! Do the thing!",
-        "It's on you! Watch out!",
-        "Boss has eyes on you, sugar!",
-        "Get clear, hon, you're marked!",
-        "It said your name, darlin'!",
-        "Spread out, sugar, it's you!",
-        "Target's on your back, hon!",
-        "Run it out, darlin'!",
-        "It's got a special gift for you, sugar!",
-        "You! Yes, you! Move!",
-    ],
-    "boss_emote": [
-        "Somethin' big's comin'. Heads up!",
-        "Watch it, sugar, the boss is up to somethin'!",
-        "Heads up, hon!",
-        "Uh oh, here it comes!",
-        "Look sharp, darlin'!",
-        "Big move comin', sugar!",
-        "Get ready, hon!",
-        "The boss is windin' up!",
-        "Somethin's happenin', darlin'!",
-        "Eyes up, sugar!",
-        "Brace yourself, hon!",
-        "That doesn't sound good!",
-        "Here we go, darlin'!",
-        "Pay attention, sugar!",
-        "Oh, it's gettin' fancy now!",
-        "Watch the boss, hon!",
-        "Somethin' nasty's brewin'!",
-        "Mechanic time, sugar!",
-        "Stay sharp, darlin'!",
-        "Listen up, hon!",
-    ],
-    "drowning": [
-        "Air, sugar! Swim up!",
-        "You're runnin' out of breath, hon!",
-        "Surface, darlin', surface!",
-        "Up, up, up!",
-        "Get some air, sugar!",
-        "Hon, you need to breathe!",
-        "You're drownin', darlin'!",
-        "Swim for the top!",
-        "Lungs are burnin', sugar! Up!",
-        "Air! Now!",
-        "Honey, fish breathe water. You don't.",
-        "Kick for the surface, hon!",
-        "You're turnin' blue, sugar!",
-        "Breathe, darlin'!",
-        "Up you go, hon, quick!",
-        "Out of air! Swim!",
-        "Sugar, you're not a mermaid!",
-        "Get your head above water!",
-        "Hurry up, hon, you're drownin'!",
-        "Air, darlin', air!",
     ],
     "fatigue": [
         "Turn back, that water's got teeth.",
@@ -373,28 +219,6 @@ POOLS = {
         "Sugar, ready check! Go go go!",
         "Ready check! Don't be that person, hon!",
     ],
-    "range": [
-        "You're too far away, sugar!",
-        "Get closer, hon!",
-        "Out of range, darlin'!",
-        "Sugar, you can't hit it from there!",
-        "Face it, hon! Face the thing!",
-        "Can't see it, darlin'! Move!",
-        "Line of sight, sugar!",
-        "Turn around, hon!",
-        "Too far, darlin'!",
-        "Step in a little, sugar!",
-        "You're facin' the wrong way, hon!",
-        "Get around that pillar, darlin'!",
-        "Closer, sugar, closer!",
-        "It's behind somethin', hon!",
-        "Out of range again, darlin'!",
-        "Sugar, the target's over there!",
-        "Hon, you're swingin' at air!",
-        "Scoot in, darlin'!",
-        "Can't reach, sugar!",
-        "Look at it, hon! Look at it!",
-    ],
 }
 
 
@@ -429,18 +253,54 @@ def counts_on_disk():
     return counts
 
 
-def write_counts():
-    """Counts.lua: the clip count per category, from what is on disk."""
+LCONNECT = r"C:\Program Files\Lian-Li\L-Connect 3\x64\ffmpeg.exe"
+
+
+def find_ffmpeg(arg=None):
+    import shutil
+    for c in (arg, os.environ.get("FFMPEG"), shutil.which("ffmpeg"), LCONNECT):
+        if c and os.path.isfile(c):
+            return c
+    return None
+
+
+def clip_seconds(path, ffmpeg):
+    """A clip's length, read from ffmpeg's report on it."""
+    import subprocess
+    r = subprocess.run([ffmpeg, "-hide_banner", "-i", path], capture_output=True, text=True)
+    m = re.search(r"Duration: (\d+):(\d+):([\d.]+)", r.stderr)
+    if not m:
+        return None
+    h, mi, se = m.groups()
+    return int(h) * 3600 + int(mi) * 60 + float(se)
+
+
+def write_counts(ffmpeg=None):
+    """Counts.lua: how many clips each warning has, and how long each one runs.
+
+    The client cannot say how long a sound is, and the addon must know, to
+    start the next line only once the last has finished."""
     counts = counts_on_disk()
-    lines = ["-- Generated by tools/lines.py from the clips in Sounds/. Do not edit:",
-             "-- run a tool that writes clips, or python tools/lines.py, to refresh it.",
-             "local _, ns = ...", "ns.COUNTS = {"]
+    ffmpeg = find_ffmpeg(ffmpeg)
+    if not ffmpeg:
+        raise SystemExit("ffmpeg not found (set FFMPEG): clip lengths are needed for Counts.lua")
+    out = ["-- Generated by tools/lines.py from the clips in Sounds/. Do not edit:",
+           "-- run a tool that writes clips, or python tools/lines.py, to refresh it.",
+           "local _, ns = ...", "ns.COUNTS = {"]
     for cat in POOLS:
-        lines.append(f"    {cat} = {counts[cat]},")
-    lines.append("}")
-    path = os.path.join(ROOT, "Counts.lua")
-    with open(path, "w", encoding="utf-8", newline="\n") as f:
-        f.write("\n".join(lines) + "\n")
+        out.append(f"    {cat} = {counts[cat]},")
+    out += ["}", "", "-- Seconds each clip runs, in clip order.", "ns.SECONDS = {"]
+    for cat in POOLS:
+        secs = []
+        for n in range(1, counts[cat] + 1):
+            path = os.path.join(SOUNDS, clip_name(cat, n) + ".ogg")
+            if not os.path.exists(path):
+                path = os.path.join(SOUNDS, clip_name(cat, n) + ".mp3")
+            secs.append(f"{clip_seconds(path, ffmpeg) or 4:.2f}")
+        out.append(f"    {cat} = {{ {', '.join(secs)} }},")
+    out.append("}")
+    with open(os.path.join(ROOT, "Counts.lua"), "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(out) + "\n")
     return counts
 
 

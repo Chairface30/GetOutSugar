@@ -1,5 +1,5 @@
 -- Get Out, Sugar: Detect/Damage.lua
--- Standing in something, and big hits, from the damage you take.
+-- Standing in something, from the damage you take.
 --
 -- There is no combat log on this client, so nothing says which spell hit you.
 -- What UNIT_COMBAT may still carry, for the player, is each hit's amount and
@@ -14,7 +14,6 @@ local _, ns = ...
 
 local WINDOW = 3        -- seconds
 local TICKS = 3         -- magic hits within WINDOW that count as "in something"
-local BIG = 0.30        -- a hit this share of maximum health is a big hit
 
 local recent = {}
 local warnedSecret = false
@@ -28,28 +27,17 @@ end
 function ns.OnDamage(action, amount, school)
     if action ~= "WOUND" then return end
     amount = tonumber(amount)
-    if not amount or amount <= 0 then return end
+    if not amount or amount <= 0 or not Magic(school) then return end
     local now = GetTime()
-
-    if ns.IsOn("big_hit") then
-        local ok, maxHealth = ns.Ask(UnitHealthMax, "player")
-        maxHealth = ok and tonumber(maxHealth) or nil
-        if maxHealth and maxHealth > 0 and amount >= maxHealth * BIG then
-            ns.Voice.Play("big_hit")
-        end
+    recent[#recent + 1] = now
+    local keep = {}
+    for _, t in ipairs(recent) do
+        if now - t <= WINDOW then keep[#keep + 1] = t end
     end
-
-    if ns.IsOn("fire") and Magic(school) then
-        recent[#recent + 1] = now
-        local keep = {}
-        for _, t in ipairs(recent) do
-            if now - t <= WINDOW then keep[#keep + 1] = t end
-        end
-        recent = keep
-        if #recent >= TICKS then
-            recent = {}
-            ns.Voice.Play("fire")
-        end
+    recent = keep
+    if #recent >= TICKS then
+        recent = {}
+        ns.Voice.Play("fire")
     end
 end
 
@@ -59,7 +47,7 @@ local listener = ns.Listener(function(event, unit, action, descriptor, amount, s
         if not warnedSecret then
             warnedSecret = true
             ns.Print("this client keeps the damage you take secret, so the "
-                .. "\"standing in something\" and \"big hit\" warnings cannot work here.")
+                .. "\"standing in something\" warning cannot work here.")
         end
         return
     end
@@ -67,7 +55,7 @@ local listener = ns.Listener(function(event, unit, action, descriptor, amount, s
 end)
 
 ns.RegisterDetector("damage", {
-    cats = { "fire", "big_hit" },
+    cats = { "fire" },
     Enable = function()
         recent = {}
         if not listener:Listen("UNIT_COMBAT", "player") then

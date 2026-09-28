@@ -15,13 +15,11 @@ copy that ships with Lian-Li's L-Connect on this machine.
   python tools/make_test_tracks.py --force      # remake them all
   python tools/make_test_tracks.py --only fire,cc
 """
-import argparse, json, os, shutil, subprocess, sys, tempfile
+import argparse, json, os, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import lines
-
-LCONNECT = r"C:\Program Files\Lian-Li\L-Connect 3\x64\ffmpeg.exe"
 
 # One PowerShell run speaks every line: starting PowerShell per clip would take
 # minutes. The list arrives as a JSON file of [wav path, text] pairs.
@@ -39,11 +37,11 @@ $s.SetOutputToNull()
 """
 
 
-def find_ffmpeg(arg):
-    for c in (arg, os.environ.get("FFMPEG"), shutil.which("ffmpeg"), LCONNECT):
-        if c and os.path.isfile(c):
-            return c
-    sys.exit("ffmpeg not found: set FFMPEG or pass --ffmpeg")
+def find_ffmpeg(arg=None):
+    found = lines.find_ffmpeg(arg)
+    if not found:
+        sys.exit("ffmpeg not found: set FFMPEG or pass --ffmpeg")
+    return found
 
 
 def main():
@@ -82,7 +80,7 @@ def main():
                 else:
                     print(f"  failed: {name}")
             print(f"made {made}/{len(todo)}")
-    counts = lines.write_counts()
+    counts = lines.write_counts(ffmpeg)
     print("Counts.lua:", ", ".join(f"{c} {n}" for c, n in counts.items()))
 
 

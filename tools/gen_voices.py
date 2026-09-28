@@ -19,7 +19,7 @@ re-run next month and picks up where it stopped.
   python tools/gen_voices.py --go                 # generate every clip still on a test voice
   python tools/gen_voices.py --go --only fire,cc
 """
-import argparse, json, os, shutil, subprocess, sys, tempfile, time, urllib.error, urllib.request
+import argparse, json, os, subprocess, sys, tempfile, time, urllib.error, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -112,7 +112,7 @@ def main():
             made += 1
             print(f"[{i}/{len(todo)}] {name}")
             time.sleep(0.3)
-    lines.write_counts()
+    lines.write_counts(ffmpeg)
     print(f"\n{made} clip(s) now in Trixie's voice. Restart the game client: "
           "a /reload does not pick up changed sound files.")
 
