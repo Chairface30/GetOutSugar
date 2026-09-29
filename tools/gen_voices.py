@@ -8,9 +8,9 @@ delivery and does not say it.
 Nothing is sent without --go or --sample. Without them this lists what would
 be made, with the exact text sent, and how many characters that costs.
 
-Each clip is fetched as mp3, made louder (ElevenLabs output is quiet, about
--24 dB; +30% with a limiter, as the Casino's amplify_voices.py does) and saved
-as Ogg over the test clip of the same name. voiced.json remembers which clips
+Each clip is fetched as mp3, levelled (tools/level.py: every clip at the same
+loudness, whatever the delivery, and loud enough for a fight) and saved as Ogg
+over the test clip of the same name. voiced.json remembers which clips
 are done, so a run that hits the monthly quota picks up where it stopped.
 
   set ELEVENLABS_API_KEY=sk_...                   (never written to any file)
@@ -24,6 +24,7 @@ import argparse, json, os, subprocess, sys, tempfile, time, urllib.error, urllib
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import lines
+import level
 from make_test_tracks import find_ffmpeg
 
 API = "https://api.elevenlabs.io/v1"
@@ -38,7 +39,6 @@ SETTINGS = [
     {"stability": 0.5},
     None,
 ]
-GAIN = 1.3
 DONE = os.path.join(HERE, "voiced.json")      # clip names already in her voice
 SAMPLES = os.path.join(HERE, "samples")
 
@@ -87,14 +87,7 @@ class Speaker:
 
 
 def to_ogg(ffmpeg, mp3, out):
-    part = out + ".tmp.ogg"
-    r = subprocess.run([ffmpeg, "-hide_banner", "-loglevel", "error", "-y", "-i", mp3,
-                        "-af", f"volume={GAIN},alimiter=limit=0.98", "-ac", "1",
-                        "-c:a", "libvorbis", "-q:a", "2", part])
-    if r.returncode != 0 or not os.path.getsize(part):
-        return False
-    os.replace(part, out)
-    return True
+    return level.level(ffmpeg, mp3, out) is not None
 
 
 def main():

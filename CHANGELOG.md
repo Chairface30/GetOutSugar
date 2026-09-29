@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+**Changed**
+- **Every line is now the same loudness, and louder.** Trixie's lines used to vary a lot with the delivery: a sighed line could be less than a quarter as loud as a shouted one, and the quietest were lost in a fight. All 340 clips are now leveled to the same loudness, about that of DBM's voice packs. On average they are about 7 dB louder; the quietest crowd control lines gained about 13 dB.
+
 ## Get Out, Sugar v0.9 (2026-09-28)
 
 **New**

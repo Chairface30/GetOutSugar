@@ -174,6 +174,19 @@ secs = boot().eval("(function() for cat, n in pairs(NS.COUNTS) do if #NS.SECONDS
 check("every clip has its length recorded", secs == "ok", secs)
 stray = [f for f in os.listdir("Sounds") if re.sub(r"\d+\.ogg$", "", f)[len(lines.PREFIX):] not in lines.POOLS]
 check("no clips left for warnings that are gone", not stray, stray[:5])
+# Loudness: one clip that is quieter than the rest is the one nobody hears.
+# Measured with ffmpeg, so it is skipped where there is none.
+import level
+from concurrent.futures import ThreadPoolExecutor
+ffmpeg = lines.find_ffmpeg()
+if ffmpeg:
+    names = level.clips("Sounds")
+    with ThreadPoolExecutor(8) as pool:
+        measured = list(zip(names, pool.map(lambda n: level.measure(ffmpeg, os.path.join("Sounds", n)), names)))
+    off = [(n, m["lufs"], m["peak"]) for n, m in measured if not level.on_target(m)]
+    check(f"every clip is within {level.TOLERANCE} LU of {level.TARGET} LUFS, with no peak at full scale", not off, off[:5])
+else:
+    print("  skip the clips' loudness (no ffmpeg)")
 
 # --------------------------------------------------------------------------
 print("A new install")

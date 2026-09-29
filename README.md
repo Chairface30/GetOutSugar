@@ -32,5 +32,6 @@ WoW Forever hides a lot from addons in combat: there is no combat log, and your 
 
 - `tools/lines.py`: every line she says, by warning.
 - `tools/make_test_tracks.py`: speaks every line with Windows' own voice, for free testing.
+- `tools/level.py`: brings every clip to the same loudness (-12 LUFS, about what DBM's voice packs use). The voice tool runs it on each new clip; `--check` measures without changing anything.
 - `tools/gen_voices.py`: Trixie's real voice from ElevenLabs; a dry run unless given `--go`, and it reads the API key only from `ELEVENLABS_API_KEY`.
 - `python tests/addon_test.py`: the logic, in a stand-in client (needs `pip install lupa`).
