@@ -2,7 +2,7 @@
 ## Title: Get Out, Sugar
 ## Notes: Trixie yells at you before you die: standing in fire, stuns, fears, boss fights and more. Type /trixie.
 ## Author: Chairface Chippendale
-## Version: 0.8
+## Version: 0.9
 ## SavedVariables: GetOutSugarDB
 ## IconTexture: Interface\AddOns\GetOutSugar\Textures\trixie
 
