@@ -5,7 +5,8 @@
 -- What UNIT_COMBAT may still carry, for the player, is each hit's amount and
 -- school -- the same feed the floating combat text is drawn from. Standing in
 -- fire looks like several magic-school hits in quick succession, so that is
--- what is counted. It cannot tell a puddle from a damage-over-time spell.
+-- what is counted. It cannot tell a puddle from a damage-over-time spell, but
+-- it keeps quiet while you are rooted, stunned or otherwise held in place.
 --
 -- Whether UNIT_COMBAT is readable here is for the probe to say. If its
 -- values come back secret, this detector says so once and stays quiet.
@@ -28,6 +29,12 @@ function ns.OnDamage(action, amount, school)
     if action ~= "WOUND" then return end
     amount = tonumber(amount)
     if not amount or amount <= 0 or not Magic(school) then return end
+    -- Rooted or stunned, you cannot get out, and a root's own ticks are not
+    -- fire. Those hits are not counted at all.
+    if ns.HeldInPlace and ns.HeldInPlace() then
+        recent = {}
+        return
+    end
     local now = GetTime()
     recent[#recent + 1] = now
     local keep = {}
