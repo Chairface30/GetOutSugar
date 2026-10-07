@@ -2,11 +2,12 @@
 
 ## Unreleased
 
-**Changed**
-- **Every line is now the same loudness, and louder.** Trixie's lines used to vary a lot with the delivery: a sighed line could be less than a quarter as loud as a shouted one, and the quietest were lost in a fight. All 340 clips are now leveled to the same loudness, about that of DBM's voice packs. On average they are about 7 dB louder; the quietest crowd control lines gained about 13 dB.
+**New**
+- **Twice the lines:** every warning has twenty more, short ones, in Trixie's voice: forty each, 640 in all. The new ones leave out "hon", "sugar" and "darlin'".
 
-**Fixed**
-- **Trixie told you to get out of a root.** A root like Entangling Roots ticks nature damage, which looked just like standing in fire, so she kept yelling to move while you couldn't. "Standing in something" now stays quiet while you are rooted, stunned, feared, incapacitated or charmed, and the hits taken then don't count once you're free. Silenced or disarmed you can still walk, so it still speaks.
+**Changed**
+- **"Standing in something" is gone.** With no combat log, nothing the client gives an addon can tell fire on the floor from a damage-over-time spell or a spell cast at you, so she kept telling you to move out of things you can't move out of. She now speaks only when the game itself says what happened.
+- **Every line is now the same loudness, and louder.** Trixie's lines used to vary a lot with the delivery: a sighed line could be less than a quarter as loud as a shouted one, and the quietest were lost in a fight. All 340 clips are now leveled to the same loudness, about that of DBM's voice packs. On average they are about 7 dB louder; the quietest crowd control lines gained about 13 dB.
 
 ## Get Out, Sugar v0.9 (2026-09-28)
 

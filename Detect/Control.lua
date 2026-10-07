@@ -40,39 +40,6 @@ local function Kind(unit, index)
     return nil
 end
 
--- Kinds that keep you from walking out of anything.
-local HOLDS = {
-    ROOT = true, STUN = true, STUN_MECHANIC = true, FEAR = true, FEAR_MECHANIC = true,
-    CONFUSE = true, CHARM = true, POSSESS = true,
-}
-
--- True while one of those is on you: "get out" is no use then. A root such as
--- Entangling Roots also ticks magic damage, which looks just like fire. An
--- effect whose kind the client keeps secret counts as one, since the warning
--- is the one that can do harm by being wrong.
-function ns.HeldInPlace()
-    local api = _G.C_LossOfControl
-    if type(api) ~= "table" then return false end
-    local byUnit = type(api.GetActiveLossOfControlDataByUnit) == "function"
-    local okN, count
-    if byUnit and type(api.GetActiveLossOfControlDataCountByUnit) == "function" then
-        okN, count = ns.Ask(api.GetActiveLossOfControlDataCountByUnit, "player")
-    end
-    if not (okN and type(count) == "number") then
-        okN, count = ns.Ask(api.GetActiveLossOfControlDataCount)
-    end
-    if not (okN and type(count) == "number") then count = 8 end   -- read until one is missing
-    for i = 1, math.min(count, 8) do
-        local okD, data
-        if byUnit then okD, data = pcall(api.GetActiveLossOfControlDataByUnit, "player", i) end
-        if not (okD and data ~= nil) then okD, data = pcall(api.GetActiveLossOfControlData, i) end
-        if not okD or data == nil then break end
-        local kind = Kind("player", i)
-        if not kind or HOLDS[kind] then return true end
-    end
-    return false
-end
-
 function ns.OnLossOfControl(unit, index)
     local kind = Kind(unit, index)
     if kind and SKIP[kind] then return end

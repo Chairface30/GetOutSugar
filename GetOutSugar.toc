@@ -1,6 +1,6 @@
 ## Interface: 16001
 ## Title: Get Out, Sugar
-## Notes: Trixie yells at you before you die: standing in fire, stuns, fears, boss fights and more. Type /trixie.
+## Notes: Trixie yells at you before you die: stuns, fears, swimming too far, boss fights and more. Type /trixie.
 ## Author: Chairface Chippendale
 ## Version: 0.9
 ## SavedVariables: GetOutSugarDB
@@ -15,7 +15,6 @@ Core.lua
 Catalog.lua
 Counts.lua
 Voice.lua
-Detect\Damage.lua
 Detect\Control.lua
 Detect\Encounter.lua
 Detect\Countdown.lua

@@ -1,6 +1,6 @@
 # Get Out, Sugar
 
-Trixie, the host from **Chairface's Casino**, yells at you before you die. Standing in fire, stunned, swimming out too far, dying, a boss fight starting: she tells you, loudly, in twenty different ways each.
+Trixie, the host from **Chairface's Casino**, yells at you before you die. Stunned, feared, swimming out too far, dying, a boss fight starting: she tells you, loudly, in forty different ways each.
 
 Made for **WoW Forever** (interface 16001).
 
@@ -14,7 +14,7 @@ Made for **WoW Forever** (interface 16001).
 
 ## The warnings
 
-**Danger**: standing in something · too far out to sea
+**Danger**: too far out to sea
 
 **Crowd control**, each kind with its own lines: stunned · feared · incapacitated (sheep, sap, gouge, sleep, disorient) · mind controlled · silenced · rooted · disarmed · other crowd control (any other kind, or one the game keeps hidden)
 
@@ -24,7 +24,7 @@ With **Ready check** on, her line replaces the game's own ready check sound.
 
 ## What it can and cannot see
 
-WoW Forever hides a lot from addons in combat: there is no combat log, and your health and buffs are secret. So there is no low-health warning, and **"standing in something" is a best guess**: several magic-damage hits in three seconds. It can mistake a damage-over-time spell for fire.
+WoW Forever hides a lot from addons in combat: there is no combat log, and your health and buffs are secret. So there is no low-health warning and no "standing in fire" warning: nothing the client gives an addon can tell fire on the floor from a damage-over-time spell or a spell cast at you, and she only speaks when the game itself says what happened.
 
 `/trixie probe` records what the client lets her see; `/trixie probe report` shows it.
 

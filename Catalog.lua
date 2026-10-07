@@ -8,8 +8,6 @@ local _, ns = ...
 
 ns.CATALOG = {
     -- Danger: said the moment it happens.
-    { cat = "fire",        prio = "danger", label = "Standing in something",
-      desc = "Several magic-damage hits within three seconds, which is what standing in fire, poison or void feels like. Best effort: this client has no combat log to say what hit you, so a damage-over-time spell can set it off too. Quiet while you are rooted, stunned or feared, since you cannot get out then." },
     -- Crowd control, one warning per kind the game reports.
     { cat = "cc_stun",     prio = "danger", label = "Stunned" },
     { cat = "cc_fear",     prio = "danger", label = "Feared" },

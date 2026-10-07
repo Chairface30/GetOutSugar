@@ -20,28 +20,6 @@ PREFIX = "gos_"
 
 POOLS = {
     # ---- danger ---------------------------------------------------------
-    "fire": [
-        "Get out of the fire sugar!",
-        "Move your feet, hon, you're cookin'!",
-        "Out of the bad stuff, now!",
-        "Sugar you're standin' in it!",
-        "Hot, hot, hot! Move!",
-        "Darlin', that glowin' floor is not a rug!",
-        "Step left, step right, just STEP!",
-        "You're sizzlin', hon! Get out!",
-        "Feet sugar! Use 'em!",
-        "Out of it! Out out out!",
-        "Honey, the ground is tryin' to kill you!",
-        "Quit dancin' in the flames and move!",
-        "That's not a spa sugar, get out!",
-        "Move, move, move!",
-        "You're on fire, and not the good kind!",
-        "Scoot, darlin'! Now!",
-        "Sugar the floor! The FLOOR!",
-        "Get out before you're well done!",
-        "Out of the puddle, hon!",
-        "Don't just stand there, MOVE!",
-    ],
     # Crowd control, by kind. "cc" is for any other kind, or when the client
     # will not say which.
     "cc_stun": [
@@ -399,6 +377,109 @@ POOLS = {
     ],
 }
 
+# The second twenty of each, clips 21 to 40: short, and none of her pet
+# names, so the same few words don't come round every other line.
+MORE = {
+    "cc_stun": [
+        "Stunned!", "Bell rung!", "Seein' stars!", "Frozen up!", "Can't move!",
+        "Stun! Hold on!", "Lights out!", "Dazed!", "Stunned again!", "Wait it out!",
+        "Locked up!", "You're stuck!", "Bonk!", "Out cold!", "Trinket it!",
+        "Stun on you!", "Hold tight!", "Stunned silly!", "Don't panic!", "It'll pass!",
+    ],
+    "cc_fear": [
+        "Feared!", "Run for it!", "You're runnin'!", "Scared off!", "Fear on you!",
+        "Watch the ledge!", "Panic!", "There you go!", "Legs gone wild!", "Feared again!",
+        "Don't pull more!", "Break the fear!", "Spooked!", "Runnin' blind!", "Hold on!",
+        "Scared silly!", "Fear! Trinket!", "Off you go!", "Eek!", "Whoa there!",
+    ],
+    "cc_incap": [
+        "Sheeped!", "Baa!", "Sapped!", "Gouged!", "Polymorphed!",
+        "Asleep!", "Disoriented!", "Knocked out!", "Don't hit it!", "Nap time!",
+        "You're a sheep!", "Out like a light!", "Snoozin'!", "Incapacitated!", "Woolly now!",
+        "Wake up!", "Dizzy!", "Loopy!", "Hang tight!", "Count those sheep!",
+    ],
+    "cc_charm": [
+        "Mind controlled!", "You're charmed!", "Possessed!", "Fight it!", "Not you anymore!",
+        "Wrong team!", "Somebody stop 'em!", "Strings attached!", "Snap out of it!", "Puppet time!",
+        "Don't hit friends!", "You're turned!", "Charmed!", "Break free!", "Somebody's drivin'!",
+        "Uh oh!", "Hands off them!", "Brainwashed!", "Lord, you're turned!", "Watch out, y'all!",
+    ],
+    "cc_silence": [
+        "Silenced!", "Hush!", "No spells!", "Muted!", "Can't cast!",
+        "Shh!", "Lips zipped!", "Quiet now!", "Spell locked!", "Tongue-tied!",
+        "No castin'!", "Go melee!", "Hush up!", "Mouth shut!", "Use instants!",
+        "Silence on you!", "Wait it out!", "Not a peep!", "Muzzled!", "Speechless!",
+    ],
+    "cc_root": [
+        "Rooted!", "Feet stuck!", "Can't walk!", "Planted!", "Pinned!",
+        "Stuck fast!", "Frost nova!", "Vines!", "Glued down!", "Still swing!",
+        "Break the roots!", "Stand and fight!", "No runnin'!", "Rooted again!", "Stuck!",
+        "Boots frozen!", "Hold your ground!", "Feet won't go!", "Caught!", "Rooted! Cast away!",
+    ],
+    "cc_disarm": [
+        "Disarmed!", "Weapon's gone!", "Empty hands!", "Use your fists!", "Butterfingers!",
+        "Punch 'em!", "Snatched!", "No weapon!", "Kick 'em!", "Disarmed again!",
+        "Bare hands!", "Fists up!", "Improvise!", "Where'd it go?", "Dropped it!",
+        "Cast instead!", "Hands empty!", "It'll come back!", "Swing anyway!", "Rude!",
+    ],
+    "cc": [
+        "Locked down!", "Shake it off!", "Break free!", "Stuck!", "Hold on!",
+        "Caught!", "Trinket!", "Wiggle!", "Controlled!", "Hang on!",
+        "No control!", "Pinned!", "Help!", "Uh oh!", "Fight it!",
+        "Break it!", "Can't act!", "Tied up!", "It won't last!", "Oh no!",
+    ],
+    "fatigue": [
+        "Turn back!", "Too far!", "Swim back!", "Wrong way!", "Head for shore!",
+        "Go back!", "Deep water!", "You're tirin'!", "Land's that way!", "Turn around!",
+        "Back to shore!", "Fatigue!", "Paddle back!", "Not out there!", "Get to land!",
+        "You'll drown!", "Way too far!", "Shore, now!", "Swim, swim!", "Nothin' out there!",
+    ],
+    "death": [
+        "Oops.", "Well, shoot.", "Down you go.", "Ouch.", "That's a death.",
+        "Told you.", "Walk it off.", "Release, then.", "Oh dear.", "Spirit healer time.",
+        "Rest easy.", "Not great.", "That hurt.", "Well, darn.", "Run back.",
+        "Again?", "Lord.", "Dead. Again.", "So much for that.", "Bless your heart.",
+    ],
+    "countdown": [
+        "Pull timer!", "Get set!", "Countdown's on!", "Places!", "Buffs up!",
+        "Here it comes!", "Find your spot!", "Tick tock!", "Get ready!", "Almost time!",
+        "Flasks out!", "Clock's runnin'!", "Pull soon!", "Hands on keys!", "Eat up, quick!",
+        "Line up!", "Timer's goin'!", "Don't pull early!", "Brace yourselves!", "Ready, set...",
+    ],
+    "pull": [
+        "Here we go!", "Fight!", "Showtime!", "It's on!", "Go, go!",
+        "Boss up!", "Let's roll!", "Look alive!", "Game on!", "Stay sharp!",
+        "Big one!", "Let's dance!", "Eyes up!", "Go time!", "Deal 'em!",
+        "Heads up!", "On your toes!", "Make it count!", "Let's go!", "Bring it!",
+    ],
+    "wipe": [
+        "That's a wipe.", "Run back.", "Again.", "Well, shoot.", "Round two.",
+        "Regroup.", "Ouch, y'all.", "Not today.", "The house wins.", "Shake it off.",
+        "Back we go.", "Dust off.", "Bust.", "Try again.", "Oh dear.",
+        "Everybody's down.", "Reset, y'all.", "Next time.", "That stung.", "Deal again.",
+    ],
+    "kill": [
+        "Boss down!", "Jackpot!", "Got it!", "Victory!", "Nice work!",
+        "Woohoo!", "Winner!", "Loot time!", "That's a kill!", "Cash it in!",
+        "Well done!", "Payout!", "Yes!", "You did it!", "Big win!",
+        "Down it goes!", "Take a bow!", "Easy money!", "Hot streak!", "Whoo!",
+    ],
+    "durability": [
+        "Repair time.", "Gear's breakin'.", "Find a smith.", "Fix your gear.", "Armor's toast.",
+        "Go repair.", "Gear's red.", "Anvil, please.", "Nearly broken.", "Repairs, now.",
+        "Gear's shot.", "Patch it up.", "Hit a vendor.", "Fallin' apart.", "One more pull, tops.",
+        "Get it fixed.", "Gear's cryin'.", "Broken soon.", "Tatters.", "Repair bill's due.",
+    ],
+    "ready_check": [
+        "Ready check!", "Click ready!", "Ready up!", "You ready?", "Say yes!",
+        "Answer it!", "Tick tock!", "Hit ready!", "Waitin' on you!", "Ready or not!",
+        "Check's up!", "Click it!", "Don't be last!", "Yes or no?", "Look alive!",
+        "Ready?", "Quick, click!", "Everybody's waitin'!", "Go on, ready!", "Speak up!",
+    ],
+}
+for _cat, _extra in MORE.items():
+    POOLS[_cat] = POOLS[_cat] + _extra
+
 
 # How she says it: an ElevenLabs audio tag in front of each line. Tags are
 # directions, not words -- v4 acts on them and does not read them out
@@ -408,7 +489,6 @@ POOLS = {
 # its own few, so twenty lines do not all come out in one tone, and a line
 # with an obvious cue gets the tag that fits it (CUES, checked first).
 TAGS = {
-    "fire":        ["[shouting]", "[alarmed]", "[urgent]"],
     "cc_stun":     ["[alarmed]", "[teasing]", "[worried]"],
     "cc_fear":     ["[alarmed]", "[laughs]", "[teasing]"],
     "cc_incap":    ["[teasing]", "[mischievously]", "[alarmed]"],
