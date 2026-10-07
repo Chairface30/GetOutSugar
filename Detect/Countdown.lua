@@ -73,3 +73,33 @@ ns.RegisterDetector("countdown", {
         ns.Voice.CancelCount()
     end,
 })
+
+-- Trixie's numbers take the place of the game's own countdown sounds: while
+-- the count is on, the tick each second and the sound at the end are muted.
+-- They stay muted while it is on, not just while she counts: the game can
+-- play its first tick before the countdown event reaches the addon.
+ns.COUNTDOWN_SOUNDS = {
+    567474,     -- sound/interface/ui_battlegroundcountdown_timer.ogg
+    567438,     -- sound/interface/ui_battlegroundcountdown_end.ogg
+}
+
+local muted = false
+
+local function MuteGameSounds(on)
+    local fn = on and _G.MuteSoundFile or _G.UnmuteSoundFile
+    if type(fn) ~= "function" then return false end
+    local all = true
+    for _, file in ipairs(ns.COUNTDOWN_SOUNDS) do
+        if not pcall(fn, file) then all = false end
+    end
+    muted = on
+    return all
+end
+
+ns.RegisterDetector("countsounds", {
+    cats = { "count" },
+    Enable = function() MuteGameSounds(true) end,
+    Disable = function()
+        if muted then MuteGameSounds(false) end
+    end,
+})

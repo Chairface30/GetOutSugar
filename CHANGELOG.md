@@ -3,7 +3,7 @@
 ## Unreleased
 
 **New**
-- **Count the pull down:** Trixie counts a pull timer out loud, "Ten!" to "One!", then "Go!", each number on its second. She joins a shorter timer at the right number, stops if the pull is called off, and holds her other lines until "Go". On a timer under 15 seconds she skips her start line and just counts. Off until you tick it; Play counts three, two, one, go.
+- **Count the pull down:** Trixie counts a pull timer out loud, "Ten!" to "One!", then "Go!", each number on its second. She joins a shorter timer at the right number, stops if the pull is called off, and holds her other lines until "Go". On a timer under 15 seconds she skips her start line and just counts. Her numbers replace the game's countdown tick and end sound, which stay muted while this is on (battleground start timers use the same sounds). Off until you tick it; Play counts three, two, one, go.
 - **Twice the lines:** every warning has twenty more, short ones, in Trixie's voice: forty each, 640 in all. The new ones leave out "hon", "sugar" and "darlin'".
 
 **Changed**

@@ -347,6 +347,12 @@ rt.execute("FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Els
 check("muted, no count", len(played(rt)) == 0)
 rt.execute("NS.Voice.Play('count', { preview = true }) WAIT(4)")
 check("the Play button counts three, two, one, go even muted", clips_played(rt) == ["count3", "count2", "count1", "count11"], clips_played(rt))
+check("with the count on, the game's own countdown sounds are muted",
+      rt.eval("MUTED_FILES[567474] and MUTED_FILES[567438]") is True)
+rt.execute("NS.SetOn('count', false)")
+check("switched off, they come back", rt.eval("MUTED_FILES[567474] == nil and MUTED_FILES[567438] == nil") is True)
+rt = boot("GetOutSugarDB = { warnings = { countdown = true }, seenWelcome = true }")
+check("with only her start line on, the game's countdown sounds are left alone", rt.eval("next(MUTED_FILES) == nil") is True)
 
 # --------------------------------------------------------------------------
 print("Switching and refusals")

@@ -28,7 +28,7 @@ ns.CATALOG = {
     { cat = "countdown",   prio = "situation", label = "Pull countdown starts",
       desc = "Someone starts a pull timer: /pull, the countdown button, or a boss mod's pull timer that uses the game's countdown." },
     { cat = "count",       prio = "situation", label = "Count the pull down",
-      desc = "Trixie counts a pull timer out loud: ten, nine... one, go, each on its second. On a timer too short for her start line, she only counts." },
+      desc = "Trixie counts a pull timer out loud: ten, nine... one, go, each on its second. On a timer too short for her start line, she only counts. The game's own countdown ticks are muted while this is on." },
     { cat = "pull",        prio = "situation", label = "Boss fight starts" },
     { cat = "wipe",        prio = "situation", label = "Boss fight lost" },
     { cat = "kill",        prio = "situation", label = "Boss defeated" },

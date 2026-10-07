@@ -22,7 +22,7 @@ Made for **WoW Forever** (interface 16001).
 
 With **Ready check** on, her line replaces the game's own ready check sound.
 
-With **Count the pull down** on, she counts a pull timer out loud, each number on its second, and stops if the pull is called off. On a timer under 15 seconds she skips her start line and just counts. While she counts, her other lines wait until "Go".
+With **Count the pull down** on, she counts a pull timer out loud, each number on its second, and stops if the pull is called off. Her numbers replace the game's own countdown ticks, which stay muted while this is on. On a timer under 15 seconds she skips her start line and just counts. While she counts, her other lines wait until "Go".
 
 ## What it can and cannot see
 
