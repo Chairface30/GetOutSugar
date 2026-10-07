@@ -18,9 +18,11 @@ Made for **WoW Forever** (interface 16001).
 
 **Crowd control**, each kind with its own lines: stunned · feared · incapacitated (sheep, sap, gouge, sleep, disorient) · mind controlled · silenced · rooted · disarmed · other crowd control (any other kind, or one the game keeps hidden)
 
-**Moments**: you died · pull countdown starts · boss fight starts · boss fight lost · boss defeated · gear about to break (20%) · ready check
+**Moments**: you died · pull countdown starts · count the pull down (ten to one, then go) · boss fight starts · boss fight lost · boss defeated · gear about to break (20%) · ready check
 
 With **Ready check** on, her line replaces the game's own ready check sound.
+
+With **Count the pull down** on, she counts a pull timer out loud, each number on its second, and stops if the pull is called off. On a timer under 15 seconds she skips her start line and just counts. While she counts, her other lines wait until "Go".
 
 ## What it can and cannot see
 

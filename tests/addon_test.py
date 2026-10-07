@@ -29,7 +29,7 @@ PLAYED, STOPPED = {}, {}
 local handle = 0
 function PlaySoundFile(path, channel)
     handle = handle + 1
-    table.insert(PLAYED, { path = path, channel = channel, handle = handle })
+    table.insert(PLAYED, { path = path, channel = channel, handle = handle, at = NOW })
     return true, handle
 end
 function StopSound(h) table.insert(STOPPED, h) end
@@ -164,7 +164,8 @@ ALL_ON = "GetOutSugarDB = { warnings = { %s }, seenWelcome = true }" % ", ".join
 print("The lines, the catalog and the clips agree")
 catalog = boot().eval("(function() local t = {} for _, e in ipairs(NS.CATALOG) do t[#t+1] = e.cat end return table.concat(t, ',') end)()").split(",")
 check("every warning in the catalog has lines, and no others", set(catalog) == set(lines.POOLS), set(catalog) ^ set(lines.POOLS))
-check("forty lines each", all(len(v) == 40 for v in lines.POOLS.values()))
+check("forty lines each", all(len(v) == 40 for c, v in lines.POOLS.items() if c != "count"))
+check("the count: one to ten, then go", lines.POOLS["count"] == ["One!", "Two!", "Three!", "Four!", "Five!", "Six!", "Seven!", "Eight!", "Nine!", "Ten!", "Go!"])
 check("no line said twice in one warning", all(len(set(v)) == len(v) for v in lines.POOLS.values()))
 import re as _re
 check("the second twenty are short and use no pet names",
@@ -266,6 +267,7 @@ check("a kind switched off stays quiet, even with other crowd control on", cats_
 rt.execute("WAIT(20) LOC = { locType = 'ROOT' } FIRE('LOSS_OF_CONTROL_ADDED', 'player', 1) WAIT(20)")
 rt.execute("WAIT(20) FIRE('ENCOUNTER_START', 1, 'Boss', 1, 5) WAIT(20) FIRE('ENCOUNTER_END', 1, 'Boss', 1, 5, 0) WAIT(20) FIRE('ENCOUNTER_END', 1, 'Boss', 1, 5, 1)")
 check("pull, wipe, kill", cats_played(rt)[-3:] == ["pull", "wipe", "kill"])
+rt.execute("NS.SetOn('count', false)")
 rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else')")
 check("a pull countdown starting: countdown", cats_played(rt)[-1] == "countdown")
 n = len(played(rt))
@@ -295,6 +297,56 @@ rt.execute("WAIT(20) FIRE('READY_CHECK', 'Somebody Else', 30)")
 check("someone else's is, in its place", cats_played(rt)[-1] == "ready_check")
 rt.execute("NS.SetOn('ready_check', false)")
 check("switched off, the game's sound comes back", rt.eval("MUTED_FILES[567409]") is None)
+
+# --------------------------------------------------------------------------
+print("Counting the pull down")
+def clips_played(rt):
+    return [p.split("gos_")[-1][:-4] for p in played(rt)]
+rt = boot("GetOutSugarDB = { warnings = { count = true }, seenWelcome = true }")
+rt.execute("FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else') WAIT(0.5)")
+check("ten seconds left: she says ten straight away", clips_played(rt) == ["count10"], clips_played(rt))
+rt.execute("WAIT(4)")
+check("and a number each second", clips_played(rt) == ["count10", "count9", "count8", "count7", "count6"], clips_played(rt))
+check("each on its second", rt.eval("PLAYED[2].at - PLAYED[1].at") == 1, rt.eval("PLAYED[2].at - PLAYED[1].at"))
+rt.execute("WAIT(6)")
+check("down to one, then go", clips_played(rt)[-3:] == ["count2", "count1", "count11"], clips_played(rt))
+rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', 5, 5, true, 'Somebody Else') WAIT(10)")
+check("a five second timer is counted from five", clips_played(rt)[-6:] == ["count5", "count4", "count3", "count2", "count1", "count11"], clips_played(rt)[-6:])
+rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else') FIRE('START_TIMER', 2, 10, 10) WAIT(11)")
+check("announced by both events, counted once", clips_played(rt)[-11:] == ["count%d" % n for n in range(10, 0, -1)] + ["count11"] and len(played(rt)) == 17 + 11, len(played(rt)))
+n = len(played(rt))
+rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else') WAIT(3.5) FIRE('CANCEL_PLAYER_COUNTDOWN', 'player') WAIT(10)")
+check("called off, she stops counting", clips_played(rt)[n:] == ["count10", "count9", "count8", "count7"], clips_played(rt)[n:])
+check("mid-number too", rt.eval("#STOPPED") >= 1)
+n = len(played(rt))
+rt.execute("WAIT(20) FIRE('START_TIMER', 2, 10, 10) WAIT(2.5) FIRE('STOP_TIMER_OF_TYPE', 2) WAIT(10)")
+check("the older timer events start and stop it too", clips_played(rt)[n:] == ["count10", "count9", "count8"], clips_played(rt)[n:])
+n = len(played(rt))
+rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', 0, 0, true, 'Somebody Else') WAIT(5)")
+check("a countdown of nothing counts nothing", len(played(rt)) == n)
+rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', SECRET, 10, true, 'Somebody Else') WAIT(12)")
+check("secret seconds count nothing either", len(played(rt)) == n)
+
+rt = boot("GetOutSugarDB = { warnings = { count = true, countdown = true, death = true }, seenWelcome = true }")
+rt.execute("FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else') WAIT(11)")
+check("too short a timer for her start line: she only counts", "countdown" not in cats_played(rt) and len(played(rt)) == 11, cats_played(rt))
+rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', 20, 20, true, 'Somebody Else') WAIT(9)")
+check("a long one gets her start line first", cats_played(rt)[11:] == ["countdown"], cats_played(rt)[11:])
+rt.execute("WAIT(12)")
+check("then the count", clips_played(rt)[-11:] == ["count%d" % n for n in range(10, 0, -1)] + ["count11"])
+n = len(played(rt))
+rt.execute("WAIT(20) FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else') WAIT(5.2) FIRE('PLAYER_DEAD') WAIT(1)")
+check("while she counts, other lines wait", cats_played(rt)[n:] == ["count"] * 7, cats_played(rt)[n:])
+rt.execute("WAIT(4.9)")
+check("and are said after go", cats_played(rt)[n:] == ["count"] * 11 + ["death"], cats_played(rt)[n:])
+rt = boot("GetOutSugarDB = { warnings = { countdown = true }, seenWelcome = true }")
+rt.execute("FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else') WAIT(12)")
+check("with the count off, only her start line", cats_played(rt) == ["countdown"])
+rt = boot("GetOutSugarDB = { warnings = { count = true }, muted = true, seenWelcome = true }")
+rt.execute("FIRE('START_PLAYER_COUNTDOWN', 'player', 10, 10, true, 'Somebody Else') WAIT(12)")
+check("muted, no count", len(played(rt)) == 0)
+rt.execute("NS.Voice.Play('count', { preview = true }) WAIT(4)")
+check("the Play button counts three, two, one, go even muted", clips_played(rt) == ["count3", "count2", "count1", "count11"], clips_played(rt))
 
 # --------------------------------------------------------------------------
 print("Switching and refusals")

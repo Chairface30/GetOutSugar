@@ -25,6 +25,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import lines
 import level
+import trim
 from make_test_tracks import find_ffmpeg
 
 API = "https://api.elevenlabs.io/v1"
@@ -133,7 +134,7 @@ def main():
 
     made = 0
     with tempfile.TemporaryDirectory() as tmp:
-        for i, (name, _, text) in enumerate(todo, 1):
+        for i, (name, cat, text) in enumerate(todo, 1):
             try:
                 audio = speaker.say(text)
             except urllib.error.HTTPError as e:
@@ -152,6 +153,8 @@ def main():
             if not to_ogg(ffmpeg, mp3, out):
                 print(f"[{i}/{len(todo)}] {name}: conversion failed")
                 continue
+            if cat == "count":
+                trim.trim(ffmpeg, out)
             if not args.sample:
                 done.add(name)
                 save_done(done)

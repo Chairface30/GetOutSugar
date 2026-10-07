@@ -8,6 +8,10 @@
 -- or already has waiting, is not queued twice, and one that has waited too
 -- long is dropped: the moment it was about has passed.
 --
+-- A pull countdown is the one thing that does not wait its turn: each number
+-- has to land on its second, so it cuts off whatever she was saying, and the
+-- queue holds until she has said "Go".
+--
 -- The client cannot say how long a sound is, so each clip's length comes from
 -- Counts.lua, measured by the tools when the clips were made.
 
@@ -26,6 +30,7 @@ local playing             -- { handle, cat, ends }
 local queue = {}          -- { cat, prio, at }, in the order they will play
 local lastClip = {}       -- cat -> the clip number last played
 local generation = 0      -- bumped on every start, so a stale finish timer does nothing
+local counting = nil      -- the count running, while she counts a pull down
 Voice.queue = queue
 
 function Voice.Speaking()
@@ -34,11 +39,15 @@ end
 
 local Next
 
-local function Start(cat)
+local function Start(cat, clip)
     local count = ns.COUNTS and ns.COUNTS[cat] or 0
     if count < 1 then return false end
-    local clip = math.random(1, count)
-    if count > 1 and clip == lastClip[cat] then clip = clip % count + 1 end
+    if not clip then
+        clip = math.random(1, count)
+        if count > 1 and clip == lastClip[cat] then clip = clip % count + 1 end
+    elseif clip > count then
+        return false
+    end
 
     local ok, willPlay, handle = pcall(PlaySoundFile, FOLDER .. cat .. clip .. ".ogg", ns.db.channel or "Dialog")
     if not (ok and willPlay) then return false end
@@ -57,6 +66,7 @@ end
 -- The line has run its length: on to the next one waiting, if any still is.
 function Next()
     playing = nil
+    if counting then return end
     local now = GetTime()
     while #queue > 0 do
         local item = table.remove(queue, 1)
@@ -76,11 +86,12 @@ function Voice.Play(cat, opts)
 
     if opts.preview then
         Voice.Stop()
+        if cat == "count" then return Voice.Count(3, true) end
         return Start(cat)
     end
     if db.muted or not ns.IsOn(cat) then return false end
 
-    if not Voice.Speaking() and #queue == 0 then
+    if not Voice.Speaking() and #queue == 0 and not counting then
         return Start(cat)
     end
     if playing and playing.cat == cat then return false end
@@ -101,5 +112,56 @@ function Voice.Stop()
     if playing and playing.handle then pcall(StopSound, playing.handle) end
     playing = nil
     generation = generation + 1
+    counting = nil
     wipe(queue)
+end
+
+-- One exact clip, now: whatever she was saying is cut off.
+local function Say(cat, clip)
+    if playing and playing.handle then pcall(StopSound, playing.handle) end
+    playing = nil
+    return Start(cat, clip)
+end
+
+-- Clips of the "count" warning: clip n says n, and the one after ten says go.
+Voice.GO = 11
+
+-- Counts a pull down out loud: from ten, or from however many whole seconds
+-- are left if fewer, then "Go" when `remaining` runs out. A new count
+-- replaces the one running. preview: the Play button, which counts even
+-- while muted or switched off.
+function Voice.Count(remaining, preview)
+    remaining = tonumber(remaining)
+    if not remaining or remaining < 1 then return false end
+    local mine = {}
+    counting = mine
+    local function Tick(clip, last)
+        if counting ~= mine then return end
+        if preview or (not ns.db.muted and ns.IsOn("count")) then Say("count", clip) end
+        if last then
+            counting = nil
+            if not Voice.Speaking() then Next() end
+        end
+    end
+    for n = math.min(10, math.floor(remaining)), 1, -1 do
+        C_Timer.After(remaining - n, function() Tick(n) end)
+    end
+    C_Timer.After(remaining, function() Tick(Voice.GO, true) end)
+    return true
+end
+
+-- The pull was called off: she stops counting, mid-number too.
+function Voice.CancelCount()
+    if not counting then return end
+    counting = nil
+    if playing and playing.cat == "count" then
+        if playing.handle then pcall(StopSound, playing.handle) end
+        playing = nil
+        generation = generation + 1
+    end
+    if not Voice.Speaking() then Next() end
+end
+
+function Voice.Counting()
+    return counting ~= nil
 end

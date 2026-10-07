@@ -265,6 +265,10 @@ POOLS = {
         "It's almost time darlin'. Make me proud.",
         "Clock's goin' sugar! Let's make some noise!",
     ],
+    # The pull counted down: clip n says n, and clip 11 says go. Not picked at
+    # random like the rest: Voice.Count plays each on its second, so each has
+    # to be over well inside one.
+    "count": ["One!", "Two!", "Three!", "Four!", "Five!", "Six!", "Seven!", "Eight!", "Nine!", "Ten!", "Go!"],
     "pull": [
         "Here we go sugar! Look alive!",
         "Boss is up, hon! Showtime!",
@@ -500,6 +504,7 @@ TAGS = {
     "fatigue":     ["[worried]", "[urgent]", "[alarmed]"],
     "death":       ["[sighs]", "[sarcastic]", "[teasing]", "[laughs]"],
     "countdown":   ["[excited]", "[mischievously]", "[urgent]"],
+    "count":       ["[firmly]"],
     "pull":        ["[excited]", "[mischievously]", "[shouting]"],
     "wipe":        ["[sighs]", "[sarcastic]", "[exhales]"],
     "kill":        ["[excited]", "[laughs]", "[shouting]"],
@@ -510,7 +515,7 @@ CUES = [
     (r"^(Hush|Shush|Quiet|Mouth's shut)", "[whispers]"),
     (r"^(Baa|Ha!|Ha |Oof|Oops|Ouch|Whoa)", "[laughs]"),
     (r"^(Oh honey|Lord|Well sugar|Well, )", "[sighs]"),
-    (r"^(Woohoo|Jackpot|Winner|Whoo)", "[excited]"),
+    (r"^(Woohoo|Jackpot|Winner|Whoo|Go!$)", "[excited]"),
     (r"^(Oh no|Uh oh|Oh darlin'|Oh sugar)", "[alarmed]"),
 ]
 
